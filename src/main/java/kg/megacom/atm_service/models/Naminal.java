@@ -15,7 +15,7 @@ public class Naminal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String naminals;
+    private double naminals;
 
 
 
