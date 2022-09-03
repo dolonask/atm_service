@@ -14,7 +14,7 @@ public class Client {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     String name;
-    int limitMonthly;
+    final int LIMIT=200000;
 
     @OneToOne
             @JoinColumn(name = "clientStatuses_id")

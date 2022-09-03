@@ -1,11 +1,10 @@
 package kg.megacom.atm_service.controllers;
 
+import kg.megacom.atm_service.models.entities.Account;
 import kg.megacom.atm_service.models.requests.RequestOne;
 import kg.megacom.atm_service.models.responses.ResponseOne;
 import kg.megacom.atm_service.services.AccountService;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("v1/account")
@@ -16,6 +15,11 @@ public class AccountController {
         this.accountService = accountService;
     }
 
+    @PostMapping("/save")
+    public Account save(@RequestBody Account account){
+        return accountService.save(account);
+    }
+    @GetMapping("/login")
     public ResponseOne login(@RequestBody RequestOne requestOne){
         return accountService.loginIntoAcc(requestOne);
     }

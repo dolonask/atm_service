@@ -6,4 +6,7 @@ import kg.megacom.atm_service.models.responses.ResponseOne;
 
 public interface AccountService {
     ResponseOne loginIntoAcc(RequestOne requestOne);
+    Account save(Account account);
+
+    public Account findByNumber(String accNumber);
 }

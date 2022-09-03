@@ -17,7 +17,7 @@ public class BalanceController {
     }
 
     @GetMapping("/get")
-    public Optional<Balance> getBalance(@RequestParam Long balanceId){
+    public Balance getBalance(@RequestParam Long balanceId){
         return balanceService.getBalanceById(balanceId);
     }
 

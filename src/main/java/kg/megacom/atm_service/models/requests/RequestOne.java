@@ -9,6 +9,6 @@ import lombok.experimental.FieldDefaults;
 public class RequestOne {
 
     String accountNumber;
-    String atmNumber;
+    int atmNumber;
 
 }

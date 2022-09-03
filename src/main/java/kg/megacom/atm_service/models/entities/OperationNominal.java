@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
-@Table(name = "operation_nominals")
+@Table(name = "operations_nominal")
 public class OperationNominal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

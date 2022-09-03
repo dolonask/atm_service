@@ -14,8 +14,8 @@ public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
-    String account;
-
+    String accountNumber;
+//123123123123
     @OneToOne
     @JoinColumn(name = "client_id")
     Client client;

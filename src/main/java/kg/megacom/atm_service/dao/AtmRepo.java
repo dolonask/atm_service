@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AtmRepo extends JpaRepository<Atm, Long> {
+    Atm findAtmById(Long id);
 }

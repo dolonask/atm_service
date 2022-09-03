@@ -16,7 +16,7 @@ public class BalanceServiceImpl implements BalanceService {
     }
 
     @Override
-    public Optional<Balance> getBalanceById(Long balanceId) {
-        return balanceRepo.findById(balanceId);
+    public Balance getBalanceById(Long balanceId) {
+        return balanceRepo.findById(balanceId).orElseThrow(()->new RuntimeException("Баланс не найден"));
     }
 }

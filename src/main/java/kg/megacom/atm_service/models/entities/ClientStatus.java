@@ -8,10 +8,11 @@ import javax.persistence.*;
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
-@Table(name = "client_statuses")
+@Table(name = "clients_status")
 public class ClientStatus {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
-    String name;
+    String statusOfClient;
+    //active - blocked
 }
