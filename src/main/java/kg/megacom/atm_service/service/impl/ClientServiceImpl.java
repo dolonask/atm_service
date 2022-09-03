@@ -23,12 +23,14 @@ public class ClientServiceImpl implements ClientService {
     public Account clientRegistration(String name, double limit,  Currency currency) {
 
         //creating a client
-        Client client = new Client();
-        client.setName(name);
-        client.setWithdrawalLimit(limit);
-        client.setClientStatus(ClientStatus.ACTIVE);
-        clientRepo.save(client);
 
+        Client client = new Client();
+        if(!clientRepo.existsByName(name)) {
+            client.setName(name);
+            client.setWithdrawalLimit(limit);
+            client.setClientStatus(ClientStatus.DEACTIVATED);
+            clientRepo.save(client);
+        }else throw new RuntimeException("клиент уже зарегестрирован!");
 
 
         return  accountService.createAccount(client, currency);

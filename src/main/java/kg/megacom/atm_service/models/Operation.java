@@ -1,5 +1,6 @@
 package kg.megacom.atm_service.models;
 
+import kg.megacom.atm_service.models.enums.OperationStatus;
 import kg.megacom.atm_service.models.enums.OperationType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -29,4 +30,9 @@ public class Operation {
     private OperationType operationType;
     @DateTimeFormat(pattern = "dd,mm,yyyy")
     private Date operationDate;
+    @ManyToOne
+    @JoinColumn(name = "atm_id")
+    private Atm atm;
+    @Enumerated(EnumType.STRING)
+    private OperationStatus operationStatus;
 }
