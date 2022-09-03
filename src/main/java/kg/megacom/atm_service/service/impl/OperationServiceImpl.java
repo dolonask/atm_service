@@ -7,14 +7,13 @@ import kg.megacom.atm_service.repository.AccountRepo;
 import kg.megacom.atm_service.repository.AtmRepo;
 import kg.megacom.atm_service.repository.OperationRepo;
 import kg.megacom.atm_service.requests.BalanceRefillRequest;
+import kg.megacom.atm_service.requests.WithdrawalRequest;
 import kg.megacom.atm_service.response.BalanceRefillResponse;
-import kg.megacom.atm_service.service.AtmService;
-import kg.megacom.atm_service.service.BalanceService;
-import kg.megacom.atm_service.service.OperationNaminalService;
-import kg.megacom.atm_service.service.OperationService;
+import kg.megacom.atm_service.service.*;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -25,14 +24,16 @@ public class OperationServiceImpl implements OperationService {
     private final OperationRepo operationRepo;
     private final BalanceService balanceService;
     private final AtmService atmService;
+    private final AccountService accountService;
 
-    public OperationServiceImpl(AccountRepo accountRepo, AtmRepo atmRepo, OperationNaminalService operationNaminalService, OperationRepo operationRepo, BalanceService balanceService, AtmService atmService) {
+    public OperationServiceImpl(AccountRepo accountRepo, AtmRepo atmRepo, OperationNaminalService operationNaminalService, OperationRepo operationRepo, BalanceService balanceService, AtmService atmService, AccountService accountService) {
         this.accountRepo = accountRepo;
         this.atmRepo = atmRepo;
         this.operationNaminalService = operationNaminalService;
         this.operationRepo = operationRepo;
         this.balanceService = balanceService;
         this.atmService = atmService;
+        this.accountService = accountService;
     }
 
     @Override
@@ -74,5 +75,33 @@ public class OperationServiceImpl implements OperationService {
         balanceRefillResponse.setBalance(balance);
         balanceRefillResponse.setOperationStatus(operation.getOperationStatus().toString());
         return balanceRefillResponse;
+    }
+
+    @Override
+    public List<Double> cashWithdraw(WithdrawalRequest withdrawalRequest) {
+        Account account = accountRepo.findById(withdrawalRequest.getAccountId()).orElseThrow();
+        Atm atm = atmRepo.findById(withdrawalRequest.getAtmId()).orElseThrow();
+
+        //проверка счета клиента на наличие денег и лимита на снятие
+        //блокировка суммы
+        accountService.checkAvailableMoney(withdrawalRequest.getAccountId(), withdrawalRequest.getAmount());
+        // проверка есть ли деньги в банкомате
+        atmService.checkAvailableAmount(withdrawalRequest.getAtmId(), withdrawalRequest.getAmount());
+        // выдоча денег из банкомата
+        List<Double> naminals = atmService.withdrawMoney(withdrawalRequest.getAtmId(), withdrawalRequest.getAmount());
+
+
+
+       //саздание операции
+        Operation operationWithdraw = new Operation();
+        operationWithdraw.setOperationType(OperationType.WITHDRAW);
+        operationWithdraw.setOperationDate(new Date());
+        operationWithdraw.setOperationStatus(OperationStatus.SUCCESS);
+        operationWithdraw.setClients(account.getClients());
+        operationWithdraw.setAccount(account);
+        operationWithdraw.setAmount(withdrawalRequest.getAmount());
+        operationWithdraw.setAtm(atm);
+        operationRepo.save(operationWithdraw);
+        return naminals;
     }
 }

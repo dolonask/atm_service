@@ -9,4 +9,7 @@ public interface AccountService {
     Account createAccount(Client client, Currency currency);
 
     Balance checkBalance(Long accountId);
+
+    void checkAvailableMoney(Long accountId, double amount);
+
 }

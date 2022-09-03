@@ -1,12 +1,16 @@
 package kg.megacom.atm_service.controllers;
 
 import kg.megacom.atm_service.models.Balance;
+import kg.megacom.atm_service.models.Naminal;
 import kg.megacom.atm_service.requests.BalanceRefillRequest;
+import kg.megacom.atm_service.requests.WithdrawalRequest;
 import kg.megacom.atm_service.response.BalanceRefillResponse;
 import kg.megacom.atm_service.service.AccountService;
 import kg.megacom.atm_service.service.AtmService;
 import kg.megacom.atm_service.service.OperationService;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("atm")
@@ -35,5 +39,10 @@ public class AtmController {
     @PostMapping("/refill-balance")
     BalanceRefillResponse refillBalance(@RequestBody BalanceRefillRequest balanceRefillRequest){
         return operationService.refillBalance(balanceRefillRequest);
+    }
+    //снятие наличных
+    @PostMapping("/withdraw")
+    List<Double> cashWithdraw(@RequestBody WithdrawalRequest withdrawalRequest){
+        return operationService.cashWithdraw(withdrawalRequest);
     }
 }
