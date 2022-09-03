@@ -89,7 +89,8 @@ public class OperationServiceImpl implements OperationService {
         atmService.checkAvailableAmount(withdrawalRequest.getAtmId(), withdrawalRequest.getAmount());
         // выдоча денег из банкомата
         List<Double> naminals = atmService.withdrawMoney(withdrawalRequest.getAtmId(), withdrawalRequest.getAmount());
-
+        //прочиска блокированной суммы
+        accountService.removeBlockedAmount(withdrawalRequest.getAccountId(), withdrawalRequest.getAmount());
 
 
        //саздание операции

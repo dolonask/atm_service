@@ -12,4 +12,5 @@ public interface AccountService {
 
     void checkAvailableMoney(Long accountId, double amount);
 
+    void removeBlockedAmount(Long accountId, double amount);
 }

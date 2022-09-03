@@ -63,7 +63,14 @@ public class AccountServiceImpl implements AccountService {
         else throw new RuntimeException("вы можете снять только " + client.getWithdrawalLimit());
         //блокировка баланса
         balance.setAmount(balance.getAmount()-amount);
-        balance.setBlockedAmount(amount);
+        balance.setBlockedAmount(balance.getBlockedAmount() + amount);
         balanceRepo.save(balance);
+    }
+
+    @Override
+    public void removeBlockedAmount(Long accountId, double amount) {
+        Account account = accountRepo.findById(accountId).orElseThrow();
+        Balance balance = balanceRepo.findById(account.getBalance().getId()).orElseThrow();
+        balance.setBlockedAmount(balance.getBlockedAmount()-amount);
     }
 }
