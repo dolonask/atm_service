@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface NaminalRepo extends JpaRepository<Naminal, Long> {
+
+    Naminal findByNaminals(double naminal);
 }

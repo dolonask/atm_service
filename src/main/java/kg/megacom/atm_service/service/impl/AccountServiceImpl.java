@@ -9,6 +9,8 @@ import kg.megacom.atm_service.service.AccountService;
 import kg.megacom.atm_service.service.BalanceService;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class AccountServiceImpl implements AccountService {
 
@@ -32,5 +34,11 @@ public class AccountServiceImpl implements AccountService {
         account.setCurrency(currency);
         accountRepo.save(account);
         return account;
+    }
+
+    @Override
+    public Balance checkBalance(Long accountId) {
+        Optional<Account> account = accountRepo.findById(accountId);
+        return account.get().getBalance();
     }
 }

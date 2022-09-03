@@ -21,4 +21,13 @@ public class BalanceServiceImpl implements BalanceService {
         balanceRepo.save(balance);
         return balance;
     }
+
+    @Override
+    public Balance setNewBalance(double amount, Long balanceId) {
+
+        Balance balance = balanceRepo.findById(balanceId).orElseThrow();
+        balance.setAmount(balance.getAmount()+ amount);
+        balanceRepo.save(balance);
+        return balance;
+    }
 }

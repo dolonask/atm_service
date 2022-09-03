@@ -1,9 +1,10 @@
 package kg.megacom.atm_service.service;
 
-import kg.megacom.atm_service.response.AtmResponse;
+import java.util.List;
 
 public interface AtmService {
-    AtmResponse checkTotalAmount();
+    double checkTotalAmount();
 
 
+    void addMoneyFromRefill(Long atmId, double amount, List<Double> naminals);
 }

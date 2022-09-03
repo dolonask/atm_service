@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface AtmNominalsRepo extends JpaRepository<AtmNominal,Long> {
     List<AtmNominal> findAllByAtmId(Long id);
+
+    AtmNominal findByNaminalId(Long id);
 }
