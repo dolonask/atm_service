@@ -56,10 +56,10 @@ public class AccountServiceImpl implements AccountService {
         Balance balance = balanceRepo.findById(account.getBalance().getId()).orElseThrow();
 
         if (balance.getAmount() < amount) throw new RuntimeException("у вас не достаточно средств для снятие!");
-        if (client.getWithdrawalLimit() > amount){
+        if (client.getWithdrawalLimit() >= amount){
             client.setWithdrawalLimit(client.getWithdrawalLimit() - amount);
             clientRepo.save(client);
-        }else if (client.getWithdrawalLimit()==0) throw new RuntimeException("у вас лимит на снятие!");
+        }else if (client.getWithdrawalLimit()==0) throw new RuntimeException("у вас окончился лимит на снятие!");
         else throw new RuntimeException("вы можете снять только " + client.getWithdrawalLimit());
         //блокировка баланса
         balance.setAmount(balance.getAmount()-amount);

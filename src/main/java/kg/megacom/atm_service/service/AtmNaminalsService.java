@@ -35,6 +35,7 @@ public class AtmNaminalsService {
         return total;
     }
 
+    //добавление наминалов в банкомат
     public void addNaminals(List<Double> naminals) {
         for (int i = 0; i< naminals.size(); i++){
             Long id = naminalService.findByNaminals(naminals.get(i));
@@ -44,8 +45,8 @@ public class AtmNaminalsService {
         }
     }
 
+    //выдача денег банкоматом
     public List<Double> withDrawNaminals(double amount) {
-
 
         List<Double> naminals = new ArrayList<>();
         double money = amount;
@@ -53,7 +54,7 @@ public class AtmNaminalsService {
             AtmNominal atmNominal = atmNominalsRepo.findById(i).orElseThrow();
             Naminal naminal = naminalRepo.findById(i).orElseThrow();
             for (int j = 0; j < money; j++){
-            if (naminal.getNaminals() <= money) {
+            if (atmNominal.getAmount() > 0 && naminal.getNaminals() <= money) {
                 atmNominal.setAmount(atmNominal.getAmount() - 1);
                 money -= naminal.getNaminals();
                 naminals.add(naminal.getNaminals());
