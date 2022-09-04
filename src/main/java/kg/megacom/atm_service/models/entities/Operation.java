@@ -1,4 +1,4 @@
-package kg.megacom.atm_service.models;
+package kg.megacom.atm_service.models.entities;
 
 import kg.megacom.atm_service.emuns.OperationStatus;
 import kg.megacom.atm_service.emuns.OperationType;

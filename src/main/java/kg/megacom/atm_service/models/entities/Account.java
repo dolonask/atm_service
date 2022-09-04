@@ -1,4 +1,4 @@
-package kg.megacom.atm_service.models;
+package kg.megacom.atm_service.models.entities;
 
 import lombok.AccessLevel;
 import lombok.Data;
@@ -10,21 +10,22 @@ import javax.persistence.*;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 
 @Entity
-@Table(name = "atm_nominals")
-public class AtmNominal {
+@Table(name = "accounts")
+public class Account {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     Long id;
-
-    Long amount;
-
-    @ManyToOne
-    @JoinColumn(name = "atm_id")
-    Atm atm;
+    Long account;
 
     @ManyToOne
-    @JoinColumn(name = "nominal_id")
-    Nominal nominal;
+    @JoinColumn (name = "client_id")
+    Client client;
+
+    @ManyToOne
+    @JoinColumn (name = "balance_id")
+    Balance balance;
+
+
 }

@@ -1,5 +1,6 @@
-package kg.megacom.atm_service.models;
+package kg.megacom.atm_service.models.entities;
 
+import kg.megacom.atm_service.emuns.ClientStatusName;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
@@ -10,12 +11,13 @@ import javax.persistence.*;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 
 @Entity
-@Table(name = "nominals")
-public class Nominal {
+@Table(name = "client_statuses")
+public class ClientStatus {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    int nominal;
+    @Enumerated(value = EnumType.STRING)
+    ClientStatusName name;
 }
