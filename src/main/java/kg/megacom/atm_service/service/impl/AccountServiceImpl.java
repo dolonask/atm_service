@@ -7,6 +7,7 @@ import kg.megacom.atm_service.models.enums.Currency;
 import kg.megacom.atm_service.repository.AccountRepo;
 import kg.megacom.atm_service.repository.BalanceRepo;
 import kg.megacom.atm_service.repository.ClientRepo;
+import kg.megacom.atm_service.requests.TransferRequest;
 import kg.megacom.atm_service.service.AccountService;
 import kg.megacom.atm_service.service.BalanceService;
 import org.springframework.stereotype.Service;
@@ -55,12 +56,12 @@ public class AccountServiceImpl implements AccountService {
         Client client = clientRepo.findById(account.getClients().getId()).orElseThrow();
         Balance balance = balanceRepo.findById(account.getBalance().getId()).orElseThrow();
 
-        if (balance.getAmount() < amount) throw new RuntimeException("у вас не достаточно средств для снятие!");
+        if (balance.getAmount() < amount) throw new RuntimeException("у вас не достаточно средств!");
         if (client.getWithdrawalLimit() >= amount){
             client.setWithdrawalLimit(client.getWithdrawalLimit() - amount);
             clientRepo.save(client);
-        }else if (client.getWithdrawalLimit()==0) throw new RuntimeException("у вас окончился лимит на снятие!");
-        else throw new RuntimeException("вы можете снять только " + client.getWithdrawalLimit());
+        }else if (client.getWithdrawalLimit()==0) throw new RuntimeException("у вас окончился лимит!");
+        else throw new RuntimeException("ваш лимит " + client.getWithdrawalLimit());
         //блокировка баланса
         balance.setAmount(balance.getAmount()-amount);
         balance.setBlockedAmount(balance.getBlockedAmount() + amount);
@@ -72,5 +73,18 @@ public class AccountServiceImpl implements AccountService {
         Account account = accountRepo.findById(accountId).orElseThrow();
         Balance balance = balanceRepo.findById(account.getBalance().getId()).orElseThrow();
         balance.setBlockedAmount(balance.getBlockedAmount()-amount);
+    }
+
+    @Override
+    public void moneyTransfer(TransferRequest transferRequest) {
+        Account fromAccount = accountRepo.findById(transferRequest.getFromAccount()).orElseThrow();
+        Balance fromBalance = balanceRepo.findById(fromAccount.getBalance().getId()).orElseThrow();
+        Account toAccount = accountRepo.findById(transferRequest.getToAccount()).orElseThrow();
+        Balance toBalance = balanceRepo.findById(toAccount.getBalance().getId()).orElseThrow();
+
+        fromBalance.setAmount(fromBalance.getAmount() - transferRequest.getAmount());
+        toBalance.setAmount(toBalance.getAmount() + transferRequest.getAmount());
+        balanceRepo.save(fromBalance);
+        balanceRepo.save(toBalance);
     }
 }

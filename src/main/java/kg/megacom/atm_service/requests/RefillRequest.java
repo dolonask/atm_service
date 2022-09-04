@@ -4,7 +4,7 @@ import lombok.Data;
 
 import java.util.List;
 @Data
-public class BalanceRefillRequest {
+public class RefillRequest {
 
     private Long accountId;
     private Long atmId;
