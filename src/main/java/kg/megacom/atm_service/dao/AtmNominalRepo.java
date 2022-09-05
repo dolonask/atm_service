@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AtmNominalRepo extends JpaRepository<AtmNominal, Long> {
+
+
 }

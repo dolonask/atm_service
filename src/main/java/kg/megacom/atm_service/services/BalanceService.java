@@ -6,4 +6,6 @@ import java.util.Optional;
 
 public interface BalanceService {
     Balance getBalanceById(Long balanceId);
+
+    void save(Balance balance);
 }

@@ -13,6 +13,7 @@ public class AtmNominal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
+    int amount;
     @ManyToOne
     @JoinColumn(name = "atm_id")
     Atm atm;

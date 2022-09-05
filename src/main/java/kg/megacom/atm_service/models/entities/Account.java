@@ -16,7 +16,7 @@ public class Account {
     Long id;
     String accountNumber;
 //123123123123
-    @OneToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "client_id")
     Client client;
 

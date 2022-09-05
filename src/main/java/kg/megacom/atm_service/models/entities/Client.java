@@ -14,9 +14,9 @@ public class Client {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     String name;
-    final int LIMIT=200000;
+    int limit;
 
-    @OneToOne
+    @ManyToOne(cascade = {CascadeType.ALL})
             @JoinColumn(name = "clientStatuses_id")
     ClientStatus clientStatus;
 }

@@ -18,6 +18,7 @@ public class Operation {
     int amount;
     String operationType;
     Date operationDate;
+    @Enumerated(value = EnumType.STRING)
     OperationStatus status;
 
     @ManyToOne

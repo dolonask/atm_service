@@ -1,6 +1,5 @@
 package kg.megacom.atm_service.controllers;
 
-import kg.megacom.atm_service.models.entities.Account;
 import kg.megacom.atm_service.models.entities.Client;
 import kg.megacom.atm_service.services.ClientService;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,8 +17,8 @@ public class ClientController {
         this.clientService = clientService;
     }
 
-    @PostMapping("/save")
+    @PostMapping("/create")
     public Client createClient(@RequestBody Client client){
-        return clientService.createClient(client);
+        return clientService.save(client);
     }
 }

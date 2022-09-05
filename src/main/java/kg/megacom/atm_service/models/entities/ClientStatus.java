@@ -1,5 +1,6 @@
 package kg.megacom.atm_service.models.entities;
 
+import kg.megacom.atm_service.models.enums.StatusOfClient;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
@@ -13,6 +14,8 @@ public class ClientStatus {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
-    String statusOfClient;
+
+    @Enumerated(value = EnumType.STRING)
+    StatusOfClient statusOfClient;
     //active - blocked
 }
