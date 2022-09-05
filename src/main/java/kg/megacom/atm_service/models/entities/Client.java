@@ -21,7 +21,6 @@ public class Client {
     Long clientLimit;
 
     @ManyToOne
-    @JoinColumn(name = "client_status_id")
-
+    @JoinColumn(name = "client_status_id",nullable = false)
     ClientStatus clientStatus;
 }

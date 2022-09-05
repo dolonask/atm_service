@@ -1,7 +1,6 @@
 package kg.megacom.atm_service.models.entities;
 
 
-import kg.megacom.atm_service.emuns.BalanceStatus;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
@@ -20,6 +19,6 @@ public class Balance {
     Long id;
 
     double amount;
-    @Enumerated(value = EnumType.STRING)
-    BalanceStatus status;
+    double blockedAmount;
+
 }

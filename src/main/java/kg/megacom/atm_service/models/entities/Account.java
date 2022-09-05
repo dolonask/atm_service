@@ -20,11 +20,11 @@ public class Account {
     Long account;
 
     @ManyToOne
-    @JoinColumn (name = "client_id")
+    @JoinColumn (name = "client_id",nullable = false)
     Client client;
 
     @ManyToOne
-    @JoinColumn (name = "balance_id")
+    @JoinColumn (name = "balance_id",nullable = false)
     Balance balance;
 
 

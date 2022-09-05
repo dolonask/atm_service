@@ -17,7 +17,7 @@ public class Atm {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    String atm;
+    Long atm;
 
     Long amount;
 }
